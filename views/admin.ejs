@@ -31,32 +31,19 @@
     <div id="content" class="mt-4 ml-3 w-100">
         <div id="content" class="card card-outline-secondary">
             <div class="card-header">
-                <h3 class="mb-0" style="text-align: center;"> Formular postare noua</h3>
+                <h3 class="mb-0 row justify-content-center"> Formular postare noua</h3>
             </div>
             <div class="card-body">
-                <form autocomplete="off" class="form" role="form">
-                    <fieldset>
-                        <label class="mb-0" for="title">Titlu</label>
-                        <div class="row mb-2">
-                            <div class="col-lg-12">
-                                <input class="form-control" id="name" name="name" required="" type="text">
-                            </div>
-                        </div>                
-                        <label class="mb-0" for="content">Articol</label>
-                        <div id="toolbar" class="form-control">
-                            <button class="ql-bold">Bold</button>
-                            <button class="ql-italic">Italic</button>
-                            <button class="ql-underline">Underline</button>
-                            <button class="ql-link">Link</button>
-                            <button class="ql-blockquote">Quote</button>                                                                     
-                            <button class="ql-code-block">Code</button>
-                            <button class="ql-image">Image</button>
-                          </div>
-                          <div id="editor" class="form-control">
-                            <p></p>
-                          </div>
-                        <button class="btn btn-secondary btn-lg float-right mt-4" type="submit">Posteaza</button>
-                    </fieldset>
+                <form action="/admin" method="POST" autocomplete="off" class="form" role="form">
+                    <div class="row mb-2">
+                        <div class="col-lg-12">
+                            <label class="mb-0" for="title">Titlu</label>
+                            <input class="form-control" id="name" name="postTitle" required="" type="text">
+                            <label class="mb-0" for="content">Articol</label>
+                            <textarea class="form-control" name="postBody" rows="5"></textarea>  
+                        </div>
+                    </div>                            
+                    <button class="btn btn-secondary btn-lg float-right mt-4" name="button" type="submit">Posteaza</button>                    
                 </form>
             </div>
         </div>

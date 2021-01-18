@@ -14,9 +14,7 @@ mongoose.connect("mongodb://localhost:27017/cabinetPsihologie", {useNewUrlParser
 
 const articleSchema = {
     title: String,
-    content: String,
-    date: Date,
-    author: String
+    content: String
 };
 
 const Post = mongoose.model("Post", articleSchema);
@@ -31,6 +29,39 @@ app.get("/contact", function(req, res){
 
 app.get("/admin", function(req, res){
     res.render("admin");
+});
+
+app.get("/post", function(req, res){
+    Post.find({}, function(err, posts){
+        res.render("post", {
+            posts: posts
+        });
+    });
+});
+
+app.post("/admin", function(req, res){
+    const articol = new Post({
+        title: req.body.postTitle,
+        content: req.body.postBody
+    });
+    articol.save(function(err){
+        if(!err){
+            res.redirect("/");
+        } else {
+            console.log(err);
+        };
+    });
+});
+
+app.get("/post/:postId", function(req, res){
+    const requestedPostId = req.params.postId;
+
+    Post.findOne({_id: requestedPostId}, function(err, post){
+        res.render("post", {
+            title: post.title,
+            content: post.content
+        });
+    });
 });
 
 
