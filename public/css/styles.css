@@ -1,0 +1,14 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+.background-red {
+    background-color: rgb(240, 59, 59);
+}
+
+.text-red {
+    color: rgb(240, 59, 59);
+}
