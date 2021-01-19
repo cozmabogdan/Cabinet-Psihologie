@@ -3,8 +3,13 @@
 
 <div class="card mb-4" style="margin-top: 20px;">
     <div class="card-body" >
-        <h2 class="mt-4"> <%= title %> </h2>
-        <p class="text-dark"><%= content %></p>
+        <h2 class="post-title row justify-content-center"> <%= title %> </h2>
+        <p class="post-text"><%- content %></p>
+    </div>
+    <div class="card-footer text-muted">
+        <% let monthNames = ["Ianuarie", "Februarie", "Martie", "Aprilie", "Mai", "Iunie", "Iulie", "August", "Septembrie", "Octombrie", "Noiembrie", "Decembrie"]; %> 
+        <% let month = monthNames[postedAt.getMonth()]; %>
+        <p>Postat la <%= postedAt.getDate() + ' ' + month + ' ' + postedAt.getFullYear()  %> de <a class="text-primary" href="#"><%= author %></a></p>        
     </div>
 </div>
 

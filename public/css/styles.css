@@ -125,3 +125,14 @@ ul ul a {
 #content {
     min-height: 80vh;
 }
+
+.post-text {
+    color: black;
+    font-size: 17px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.post-title {
+    font-weight: bolder;
+    margin-bottom: 4rem;
+}

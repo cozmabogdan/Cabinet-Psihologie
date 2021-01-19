@@ -3,6 +3,11 @@ const ejs = require("ejs");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const _ = require("lodash");
+const os = require("os");
+const dateFormat = require("dateformat");
+
+let day = dateFormat(new Date(), 'dd-mm-yyyy, h:MM:ss');
+let author = "Cozma Maria Dolores";
 
 const app = express();
 
@@ -15,7 +20,12 @@ mongoose.connect("mongodb://localhost:27017/cabinetPsihologie", {useNewUrlParser
 
 const articleSchema = {
     title: String,
-    content: String
+    content: String,
+    postedAt: {
+        type: Date,
+        default: Date.now
+    },
+    author: String
 };
 
 const Post = mongoose.model("Post", articleSchema);
@@ -43,8 +53,10 @@ app.get("/posts", function(req, res){
 app.post("/admin", function(req, res){
     const articol = new Post({
         title: req.body.postTitle,
-        content: req.body.postBody
+        content: req.body.postBody,
+        author: author
     });
+    
     articol.save(function(err){
         if(!err){
             res.redirect("/");
@@ -56,11 +68,13 @@ app.post("/admin", function(req, res){
 
 app.get("/post/:postId", function(req, res){
     const requestedPostId = req.params.postId;
-
     Post.findOne({_id: requestedPostId}, function(err, post){
+        let newLine = post.content.replace(/(\r\n)/gm, '<br><br>');
         res.render("post", {
             title: post.title,
-            content: post.content
+            content: newLine,
+            postedAt: post.postedAt,
+            author: author
         });
     });
 });
