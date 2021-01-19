@@ -2,6 +2,7 @@ const express = require("express");
 const ejs = require("ejs");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const _ = require("lodash");
 
 const app = express();
 
@@ -31,9 +32,9 @@ app.get("/admin", function(req, res){
     res.render("admin");
 });
 
-app.get("/post", function(req, res){
+app.get("/posts", function(req, res){
     Post.find({}, function(err, posts){
-        res.render("post", {
+        res.render("posts", {
             posts: posts
         });
     });
