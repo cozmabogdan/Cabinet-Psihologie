@@ -105,7 +105,6 @@ app.get("/edit/:postId", function(req, res){
     });
 });
 
-
 //replace one document in the DB
 app.post("/edit", function(req, res){
     
@@ -115,8 +114,13 @@ app.post("/edit", function(req, res){
     });
 });
 
-
-
+//delete one document from DB
+app.get("/delete/:postId", function(req, res){
+    const requesteId = req.params.postId;
+    Post.deleteOne({_id: requesteId}, function(err, post){
+        res.redirect("/modify");
+    });
+});
 
 
 
