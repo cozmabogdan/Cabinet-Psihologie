@@ -1,0 +1,41 @@
+<!--header-->
+<%- include("partials/header") -%>
+
+<div class="wrapper">
+    <!-- Sidebar -->
+    <nav id="sidebar" class="mt-4 card card-outline-secondary">
+        <div class="sidebar-header">
+            <h3>Admin Dashboard</h3>
+        </div>
+
+        <ul class="list-unstyled components">
+            <p>Arhiva</p>           
+            <li>
+                <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Postari</a>
+                <ul class="collapse list-unstyled" id="pageSubmenu">
+                    <li>
+                        <a href="/admin">Adauga articol</a>
+                    </li>
+                    <li>
+                        <a href="/modify">Modifica postare</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    <!--List of articles-->
+    <div class="row w-100">
+        <div class="col-12 mt-4 justify-content-between align-items-center">
+            <% posts.forEach(function(post){%>
+                <ul class="list-group-item">
+                    <li class="list-group-item"><a class="text-primary" href="/post/<%=post._id%>"><%= post.title %></a><span class="badge badge-primary badge-pill ml-4 float-right">Delete</span><span class="badge badge-primary badge-pill ml-4 float-right"><a href="/edit/<%=post._id%>">Edit</a></span></li>
+                </ul>
+            <%})%> 
+        </div>
+    </div>
+</div>
+
+
+<!--footer-->
+<%- include("partials/footer") -%>
