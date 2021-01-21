@@ -33,8 +33,13 @@ const articleSchema = {
 //mongoose model
 const Post = mongoose.model("Post", articleSchema);
 
+//render the last 3 documents on the home page
 app.get("/", function(req, res){
-    res.render("home");
+    Post.find({}, function(err, posts){
+        res.render("home", {
+            posts: posts
+        });
+    }).sort({postedAt: -1}).limit(3)
 });
 
 app.get("/contact", function(req, res){
@@ -95,7 +100,6 @@ app.get("/edit/:postId", function(req, res){
     requestedPostId.push(articleId);
     Post.findOne({_id: requestedPostId}, function(err, post){
         let newLine = post.content.replace(/(\r\n)/gm, '<br><br>');
-        console.log("post id:" + requestedPostId);
         res.render("edit", {
             title: post.title,
             content: newLine,
@@ -109,7 +113,7 @@ app.get("/edit/:postId", function(req, res){
 app.post("/edit", function(req, res){
     
     Post.replaceOne({_id: requestedPostId}, {title: req.body.editTitle, content: req.body.editBody}, function(err, post){
-        console.log(requestedPostId, post.title, post.content);
+        requestedPostId.splice(0, 1);
         res.redirect("modify");
     });
 });
@@ -121,8 +125,6 @@ app.get("/delete/:postId", function(req, res){
         res.redirect("/modify");
     });
 });
-
-
 
 app.listen(3000, function(){
     console.log("Server started on port 3000");

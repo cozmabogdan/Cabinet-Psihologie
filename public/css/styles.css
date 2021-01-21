@@ -142,3 +142,20 @@ ul ul a {
     box-shadow: 5px 5px 2.5px grey;
     z-index: 2;
 }
+
+.home-title {
+    font-size: 25px;
+}
+
+.card-bg {
+    background-color: #c0e0f9;
+}
+
+.card-text {
+    color: black;
+    font-weight: bold;
+}
+
+.card-footer {
+    background-color: #f4f4f4;
+}
