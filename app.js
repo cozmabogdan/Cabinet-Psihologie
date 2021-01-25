@@ -3,6 +3,9 @@ const ejs = require("ejs");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const _ = require("lodash");
+const session = require("express-session");
+const passport = require("passport");
+const passportLocalMongoose = require("passport-local-mongoose");
 
 //variable for author
 let author = "Cozma Maria Dolores";
@@ -12,12 +15,22 @@ let requestedPostId = [];
 
 const app = express();
 
-app.set('view engine', 'ejs');
-
-app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static("public"));
+app.set('view engine', 'ejs');
+app.use(bodyParser.urlencoded({extended:true}));
+
+//initialise session
+app.use(session({
+    secret: "Our little secret.",
+    resave: false,
+    saveUninitialized: false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 mongoose.connect("mongodb://localhost:27017/cabinetPsihologie", {useNewUrlParser: true});
+mongoose.set("useCreateIndex", true);
 
 //mongoose db scheme
 const articleSchema = {
@@ -30,8 +43,21 @@ const articleSchema = {
     author: String
 };
 
+const adminSchema = new mongoose.Schema({
+    username: String,
+    password: String
+});
+
+adminSchema.plugin(passportLocalMongoose);
+
 //mongoose model
 const Post = mongoose.model("Post", articleSchema);
+const Admin = new mongoose.model("Admin", adminSchema);
+
+passport.use(Admin.createStrategy());
+
+passport.serializeUser(Admin.serializeUser());
+passport.deserializeUser(Admin.deserializeUser());
 
 //render the last 3 documents on the home page
 app.get("/", function(req, res){
@@ -47,7 +73,11 @@ app.get("/contact", function(req, res){
 });
 
 app.get("/admin", function(req, res){
-    res.render("admin");
+    if( req.isAuthenticated()){
+        res.render("admin");
+    } else {
+        res.redirect("/login");
+    }
 });
 
 app.get("/posts", function(req, res){
@@ -115,6 +145,26 @@ app.post("/edit", function(req, res){
     Post.replaceOne({_id: requestedPostId}, {title: req.body.editTitle, content: req.body.editBody}, function(err, post){
         requestedPostId.splice(0, 1);
         res.redirect("modify");
+    });
+});
+
+app.get("/login", function(req, res){
+    res.render("login");
+});
+
+app.post("/login", function(req, res){
+    const admin = new Admin({
+        username: req.body.username,
+        password: req.body.password
+    });
+    req.login(admin, function(err){
+        if(err){
+            console.log(err);
+        } else {
+            passport.authenticate("local")(req, res, function(){
+                res.redirect("/admin");
+            })
+        }
     });
 });
 
