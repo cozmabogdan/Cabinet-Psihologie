@@ -6,6 +6,7 @@ const _ = require("lodash");
 const session = require("express-session");
 const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
+require("dotenv/config");
 
 //variable for author
 let author = "Cozma Maria Dolores";
@@ -21,7 +22,7 @@ app.use(bodyParser.urlencoded({extended:true}));
 
 //initialise session
 app.use(session({
-    secret: "Our little secret.",
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: false
 }));
@@ -29,7 +30,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-mongoose.connect("mongodb://localhost:27017/cabinetPsihologie", {useNewUrlParser: true});
+mongoose.connect(process.env.DB_NAME, {useNewUrlParser: true});
 mongoose.set("useCreateIndex", true);
 
 //mongoose db scheme
@@ -176,6 +177,28 @@ app.get("/delete/:postId", function(req, res){
     });
 });
 
-app.listen(3000, function(){
-    console.log("Server started on port 3000");
+app.get("/register", function(req, res){
+    res.render("register");
+});
+
+app.post("/register", function(req, res){
+    Admin.register({username: req.body.username}, req.body.password, function(err, user){
+        if(err) {
+            console.log(err);
+            res.redirect("/register");
+        } else {
+            passport.authenticate("local")(req, res, function(){
+                res.redirect("/admin");
+            });
+        }
+    });
+})
+
+let port = process.env.PORT;
+if(port == null || port == "") {
+    port = 3000;
+}
+
+app.listen(port, function(){
+    console.log("Server has started");
 });
