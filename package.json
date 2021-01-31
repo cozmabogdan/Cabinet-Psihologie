@@ -29,6 +29,9 @@
   },
   "author": "",
   "license": "ISC",
+  "engines": {
+    "node":"14.15.1"
+  },
   "bugs": {
     "url": "https://github.com/cozmabogdan/Cabinet-Psihologie/issues"
   },
