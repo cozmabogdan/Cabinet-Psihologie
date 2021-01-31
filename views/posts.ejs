@@ -13,7 +13,7 @@
         <div class="card-footer text-muted">
             <% let monthNames = ["Ianuarie", "Februarie", "Martie", "Aprilie", "Mai", "Iunie", "Iulie", "August", "Septembrie", "Octombrie", "Noiembrie", "Decembrie"]; %> 
             <% let month = monthNames[post.postedAt.getMonth()]; %>
-            <p>Postat la <%= post.postedAt.getDate() + ' ' + month + ' ' + post.postedAt.getFullYear()  %> de <a class="text-primary" href="#"><%= post.author %></a></p>        
+            <p>Postat la <%= post.postedAt.getDate() + ' ' + month + ' ' + post.postedAt.getFullYear()  %> de <a class="text-primary" href="#"><%= author %></a></p>        
         </div>
     </div>
 <%})%>

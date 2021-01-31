@@ -64,7 +64,8 @@ passport.deserializeUser(Admin.deserializeUser());
 app.get("/", function(req, res){
     Post.find({}, function(err, posts){
         res.render("home", {
-            posts: posts
+            posts: posts,
+            author: author
         });
     }).sort({postedAt: -1}).limit(3)
 });
@@ -84,7 +85,8 @@ app.get("/admin", function(req, res){
 app.get("/posts", function(req, res){
     Post.find({}, function(err, posts){
         res.render("posts", {
-            posts: posts
+            posts: posts,
+            author: author
         });
     });
 });
@@ -93,7 +95,7 @@ app.post("/admin", function(req, res){
     const articol = new Post({
         title: req.body.postTitle,
         content: req.body.postBody,
-        author: "Cozma Maria Dolores"
+        author: author
     });
     
     articol.save(function(err){
@@ -158,6 +160,7 @@ app.post("/login", function(req, res){
         username: req.body.username,
         password: req.body.password
     });
+    console.log(req.body.username, req.body.password);
     req.login(admin, function(err){
         if(err){
             console.log(err);
@@ -202,3 +205,4 @@ if(port == null || port == "") {
 app.listen(port, function(){
     console.log("Server has started");
 });
+
