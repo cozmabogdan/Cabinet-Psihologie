@@ -138,7 +138,6 @@ ul ul a {
 }
 
 .img-decoration {
-    position: absolute;
     box-shadow: 5px 5px 2.5px grey;
     z-index: 2;
 }
@@ -158,4 +157,27 @@ ul ul a {
 
 .card-footer {
     background-color: #f4f4f4;
+}
+
+.text-header {
+    text-align: center;
+}
+
+@media screen and (max-width: 1125px ) {
+    .navbar-brand {
+        display: none
+    }
+    .col-sm-4 h4 {
+      justify-content: center;
+      align-items: center;  
+    }
+    .col-sm-4 img {
+        margin: 1rem;
+    }
+    .card h2 {
+        text-align: center;
+    }
+    .card-footer p {
+        text-align: center;
+    }
 }
