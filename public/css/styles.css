@@ -163,21 +163,37 @@ ul ul a {
     text-align: center;
 }
 
-@media screen and (max-width: 1125px ) {
+
+@media (min-width: 1020px) and (max-width: 1280px) {
+    .card h2 {
+        text-align: center;
+    }
+    .card-footer p {
+        text-align: center;
+    } 
+    .col img {
+        margin: 1rem;
+    }
+    .col h2 {
+        text-align: center;
+    }
+}
+
+@media (min-width: 320px) and (max-width: 1019px) {
     .navbar-brand {
         display: none
-    }
-    .col-sm-4 h4 {
-      justify-content: center;
-      align-items: center;  
-    }
-    .col-sm-4 img {
-        margin: 1rem;
     }
     .card h2 {
         text-align: center;
     }
     .card-footer p {
         text-align: center;
+    } 
+    .col img {
+        margin: 1rem;
+    }
+    .col h4 {
+        justify-content: center;
+        align-items: center;  
     }
 }
